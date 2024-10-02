@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+ayer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+@layer base {
+  :root {
+    /* Background and foreground colors for the entire UI in light mode */
+    --background: 0 0% 100%; /* Main background (white) */
+    --foreground: 0 0% 3.9%; /* Main text color (almost black) */
+    
+    /* Card component styles */
+    --card: 0 0% 100%; /* Card background (white) */
+    --card-foreground: 0 0% 3.9%; /* Card text color (almost black) */
+    
+    /* Popover (dropdowns, tooltips, etc.) styles */
+    --popover: 0 0% 100%; /* Popover background (white) */
+    --popover-foreground: 0 0% 3.9%; /* Popover text color (almost black) */
+    
+    /* Primary button or action element styles */
+    --primary: 0 0% 9%; /* Primary background (dark gray) */
+    --primary-foreground: 0 0% 98%; /* Primary text color (white) */
+    
+    /* Secondary button or action element styles */
+    --secondary: 0 0% 96.1%; /* Secondary background (light gray) */
+    --secondary-foreground: 0 0% 9%; /* Secondary text color (dark gray) */
+    
+    /* Muted elements (disabled or low-emphasis items) */
+    --muted: 0 0% 96.1%; /* Muted background (light gray) */
+    --muted-foreground: 0 0% 45.1%; /* Muted text color (medium gray) */
+    
+    /* Accent elements (highlights, emphasis areas) */
+    --accent: 0 0% 96.1%; /* Accent background (light gray) */
+    --accent-foreground: 0 0% 9%; /* Accent text color (dark gray) */
+    
+    /* Destructive action styles (e.g., delete buttons) */
+    --destructive: 0 84.2% 60.2%; /* Destructive background (red) */
+    --destructive-foreground: 0 0% 98%; /* Destructive text color (white) */
+    
+    /* Border and input field styles */
+    --border: 0 0% 89.8%; /* Border color (light gray) */
+    --input: 0 0% 89.8%; /* Input field background (light gray) */
+    
+    /* Focus ring for active elements (e.g., inputs, buttons) */
+    --ring: 0 0% 3.9%; /* Ring color (almost black) */
+    
+    /* Chart color palettes for data visualization (e.g., graphs, pie charts) */
+    --chart-1: 12 76% 61%; /* Chart color 1 (orange) */
+    --chart-2: 173 58% 39%; /* Chart color 2 (green) */
+    --chart-3: 197 37% 24%; /* Chart color 3 (blue) */
+    --chart-4: 43 74% 66%; /* Chart color 4 (yellow) */
+    --chart-5: 27 87% 67%; /* Chart color 5 (pink) */
+    
+    /* Radius for rounded corners (e.g., cards, buttons) */
+    --radius: 0.5rem; /* Border radius for elements */
+  }
+  
+  /* Dark mode variables */
+  .dark {
+    /* Background and foreground colors for the entire UI in dark mode */
+    --background: 0 0% 3.9%; /* Main background (almost black) */
+    --foreground: 0 0% 98%; /* Main text color (white) */
+    
+    /* Card component styles */
+    --card: 0 0% 3.9%; /* Card background (almost black) */
+    --card-foreground: 0 0% 98%; /* Card text color (white) */
+    
+    /* Popover (dropdowns, tooltips, etc.) styles */
+    --popover: 0 0% 3.9%; /* Popover background (almost black) */
+    --popover-foreground: 0 0% 98%; /* Popover text color (white) */
+    
+    /* Primary button or action element styles */
+    --primary: 0 0% 98%; /* Primary background (white) */
+    --primary-foreground: 0 0% 9%; /* Primary text color (dark gray) */
+    
+    /* Secondary button or action element styles */
+    --secondary: 0 0% 14.9%; /* Secondary background (dark gray) */
+    --secondary-foreground: 0 0% 98%; /* Secondary text color (white) */
+    
+    /* Muted elements (disabled or low-emphasis items) */
+    --muted: 0 0% 14.9%; /* Muted background (dark gray) */
+    --muted-foreground: 0 0% 63.9%; /* Muted text color (light gray) */
+    
+    /* Accent elements (highlights, emphasis areas) */
+    --accent: 0 0% 14.9%; /* Accent background (dark gray) */
+    --accent-foreground: 0 0% 98%; /* Accent text color (white) */
+    
+    /* Destructive action styles (e.g., delete buttons) */
+    --destructive: 0 62.8% 30.6%; /* Destructive background (dark red) */
+    --destructive-foreground: 0 0% 98%; /* Destructive text color (white) */
+    
+    /* Border and input field styles */
+    --border: 0 0% 14.9%; /* Border color (dark gray) */
+    --input: 0 0% 14.9%; /* Input field background (dark gray) */
+    
+    /* Focus ring for active elements */
+    --ring: 0 0% 83.1%; /* Ring color (light gray) */
+    
+    /* Chart color palettes for data visualization (dark mode) */
+    --chart-1: 220 70% 50%; /* Chart color 1 (blue) */
+    --chart-2: 160 60% 45%; /* Chart color 2 (green) */
+    --chart-3: 30 80% 55%; /* Chart color 3 (yellow) */
+    --chart-4: 280 65% 60%; /* Chart color 4 (purple) */
+    --chart-5: 340 75% 55%; /* Chart color 5 (pink) */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
