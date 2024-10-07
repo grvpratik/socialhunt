@@ -43,7 +43,7 @@ export const ApiService = {
     getDungeonsList: async () => {
         const response = await instance.post(`/game/dungeons`,
         );
-        return response;
+        return response.data;
     },
     getActiveRaids: async () => {
         const response = await instance.post(`/game/raid/active`,

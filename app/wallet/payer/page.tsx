@@ -41,7 +41,7 @@ function ErrorState({ message }: { message: string }) {
 }
 
 // Main content component
-function PayerContent({ token }: { token: string }) {
+function PayerContent({ token,amount }: { token: string,amount:number }) {
 	return (
 		<Card className="w-full max-w-md mx-auto">
 			<CardHeader>
@@ -51,7 +51,7 @@ function PayerContent({ token }: { token: string }) {
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<PayerConnect token={token} />
+				<PayerConnect token={token} amount={amount} />
 			</CardContent>
 		</Card>
 	);
@@ -84,7 +84,7 @@ export default async function PayerPage({
 
 	try {
 		const payload = await verifyToken(token);
-
+		console.log(payload);
 		if (!payload) {
 			return (
 				<PageWrapper>
@@ -96,7 +96,7 @@ export default async function PayerPage({
 		return (
 			<PageWrapper>
 				<Suspense fallback={<LoadingState />}>
-					<PayerContent token={token} />
+					<PayerContent token={token} amount={payload?.amount} />
 				</Suspense>
 			</PageWrapper>
 		);

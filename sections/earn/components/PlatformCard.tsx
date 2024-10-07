@@ -19,7 +19,7 @@ interface PlatformConfig {
 	color: string;
 	bgColor: string;
 	buttonText: string;
-	label: string;
+	
 }
 
 type PlatformConfigMap = {
@@ -32,28 +32,28 @@ const platformConfig: PlatformConfigMap = {
 		color: "#1DA1F2",
 		bgColor: "#E8F5FE",
 		buttonText: "Follow",
-		label: "My Tweet's",
+		
 	},
 	youtube: {
 		icon: Youtube,
 		color: "#FF0000",
 		bgColor: "#FEE8E8",
 		buttonText: "Subscribe",
-		label: "Some Tutorials",
+		
 	},
 	telegram: {
 		icon: MessageCircle,
 		color: "#0088cc",
 		bgColor: "#E8F4FC",
 		buttonText: "Join",
-		label: "Channel",
+		
 	},
 	discord: {
 		icon: Hash,
 		color: "#5865F2",
 		bgColor: "#E8E9FE",
 		buttonText: "Connect",
-		label: "Server",
+	
 	},
 };
 
@@ -63,6 +63,7 @@ interface PlatformCardProps {
 }
 
 export default function PlatformCard({ platform, task }: PlatformCardProps) {
+	console.log({task})
 	const submitTaskMutation = useMutation({
 		mutationFn: () => ApiService.submitTask(task.id),
 		onSuccess: (data) => {
@@ -87,7 +88,7 @@ export default function PlatformCard({ platform, task }: PlatformCardProps) {
 
 	return (
 		<div
-			className="w-40 h-40 rounded-xl p-4 flex flex-col items-center justify-between"
+			className=" rounded-xl p-4 flex flex-col items-center justify-between"
 			style={{ backgroundColor: config.bgColor }}
 		>
 			<div className="flex flex-col items-center gap-2">
@@ -97,8 +98,8 @@ export default function PlatformCard({ platform, task }: PlatformCardProps) {
 				>
 					<Icon color={config.color} size={24} />
 				</div>
-				<span className="text-sm font-medium text-gray-800">
-					{config.label}
+				<span className=" text-base font-semibold my-1  text-gray-800">
+					{task.task_name}
 				</span>
 			</div>
 			<VerticalSteps

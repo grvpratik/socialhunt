@@ -100,9 +100,7 @@ export function SegmentedControl() {
 			<h1 className="font-bold text-3xl p-2">Earn</h1>
 			<h3 className="font-semibold text-xl p-2"> Social</h3>
 			<Tabs defaultValue={PLATFORMS[0].id} onValueChange={handleTabChange}>
-				<TabsList
-					className={`grid rounded-full  w-full grid-cols-${PLATFORMS.length}`}
-				>
+				<TabsList className={`grid rounded-full  w-full  grid-cols-4`}>
 					{" "}
 					{PLATFORMS.map((platform) => (
 						<TabsTrigger
@@ -117,10 +115,13 @@ export function SegmentedControl() {
 				</TabsList>
 
 				{PLATFORMS.map((platform) => (
-					<TabsContent key={platform.id} value={platform.id}>
-						{isLoading || isFetching ? (
-							<TaskSkeleton />
-						) : data && data.length > 0 ? (
+					<TabsContent
+						className=" grid grid-cols-2 gap-2"
+						key={platform.id}
+						value={platform.id}
+					>
+						{(isLoading || isFetching) && <TaskSkeleton />}
+						{data && data.length > 0 ? (
 							data
 								.filter((task) => task.platform === platform.id)
 								.map((task) => (

@@ -1,7 +1,9 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Wallet } from "lucide-react";
+import axios from "axios";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,14 +16,21 @@ import {
 } from "@/components/ui/dialog";
 
 // Types
-type WalletStatus = "disconnected" | "connecting" | "connected" | "error";
+type WalletStatus =
+	| "disconnected"
+	| "connecting"
+	| "connected"
+	| "error"
+	| "signing";
 interface Props {
 	onConnect?: (publicKey: string) => void;
 	token: string;
+	type: "user" | "payer";
 }
-
-export default function WalletConnect({ onConnect, token }: Props) {
-	const { publicKey, connect, disconnect, wallets, select } = useWallet();
+const SIGN_IN_MESSAGE = "WELCOME TO SOCIAL HUNT";
+export default function WalletConnect({ onConnect, token ,type}: Props) {
+	const { publicKey, connect, disconnect, wallets, select, signMessage } =
+		useWallet();
 	const [status, setStatus] = useState<WalletStatus>("disconnected");
 	const [error, setError] = useState<string>("");
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -30,10 +39,49 @@ export default function WalletConnect({ onConnect, token }: Props) {
 		if (publicKey) {
 			setStatus("connected");
 			onConnect?.(publicKey.toString());
+			handleSignMessage();
 		} else {
 			setStatus("disconnected");
 		}
-	}, [publicKey, onConnect]);
+	}, [publicKey]);
+
+	const handleSignMessage = async () => {
+		if (!publicKey || !signMessage) return;
+
+		try {
+			setStatus("signing");
+			const message = new TextEncoder().encode(SIGN_IN_MESSAGE);
+			const signature = await signMessage(message);
+
+			if (!signature) {
+				throw new Error("Message signing declined");
+			}
+
+			const response = await axios.post(
+				`http://localhost:8080/v2/wallet/${type}/connect`,
+				{
+					signature,
+					publicKey: publicKey.toString(),
+				},
+				{
+					headers: {
+						Authorization: token,
+					},
+				}
+			);
+
+			if (response.status === 200) {
+				console.log("Successfully added wallet");
+			}
+		} catch (err) {
+			setStatus("error");
+			setError(
+				err instanceof Error
+					? err.message
+					: "Failed to sign message or connect wallet"
+			);
+		}
+	};
 
 	const handleConnect = async (walletName: string) => {
 		try {
@@ -99,7 +147,7 @@ export default function WalletConnect({ onConnect, token }: Props) {
 	);
 
 	return (
-		<div className="w-full max-w-md mx-auto flex justify-center items-center   ">
+		<div className="w-full max-w-md mx-auto flex justify-center items-center">
 			<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 				<DialogTrigger asChild>
 					<Button
@@ -126,6 +174,14 @@ export default function WalletConnect({ onConnect, token }: Props) {
 						{status === "error" && (
 							<Alert variant="destructive" className="mb-4">
 								<AlertDescription>{error}</AlertDescription>
+							</Alert>
+						)}
+
+						{status === "signing" && (
+							<Alert className="mb-4">
+								<AlertDescription>
+									Please sign the message in your wallet...
+								</AlertDescription>
 							</Alert>
 						)}
 

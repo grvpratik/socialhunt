@@ -11,6 +11,9 @@ import {
 	Diamond,
 	Home,
 	Settings,
+	Sword,
+	Swords,
+	Trophy,
 	User,
 } from "lucide-react";
 import Link from "next/link";
@@ -24,12 +27,12 @@ const TABS = [
 	{
 		label: "Store",
 		href: "/store",
-		icon: <Component className="h-5 w-5" />,
+		icon: <Swords className="h-5 w-5" />,
 	},
 	{
 		label: "Earn",
 		href: "/earn",
-		icon: <Diamond className="h-5 w-5" />,
+		icon: <Trophy className="h-5 w-5" />,
 	},
 	{
 		label: "About",

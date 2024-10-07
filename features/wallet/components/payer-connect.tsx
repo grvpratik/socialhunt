@@ -19,7 +19,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 
 // Payment configuration
 const PAYMENT_CONFIG = {
-	amount: 0.1, // SOL
+	
 	recipientAddress: "j1oAbxxiDUWvoHxEDhWE7THLjEkDQW2cSHYn2vttxTF",
 };
 
@@ -27,9 +27,10 @@ type PaymentStatus = "initial" | "processing" | "success" | "error";
 
 interface Props {
 	token: string;
+	amount: number;
 }
 
-export default function PayerConnect({ token }: Props) {
+export default function PayerConnect({ token,amount }: Props) {
 	const [isPaymentDialogOpen, setIsPaymentDialogOpen] = useState(false);
 	const [paymentStatus, setPaymentStatus] = useState<PaymentStatus>("initial");
 	const [error, setError] = useState<string>("");
@@ -40,7 +41,7 @@ export default function PayerConnect({ token }: Props) {
 
 	const handleConnect = async (publicKey: string) => {
 		console.log("Wallet connected:", publicKey);
-		// You can add any additional connection logic here
+		
 	};
 
 	const handlePayment = async () => {
@@ -57,7 +58,7 @@ export default function PayerConnect({ token }: Props) {
 				SystemProgram.transfer({
 					fromPubkey: publicKey,
 					toPubkey: new PublicKey(PAYMENT_CONFIG.recipientAddress),
-					lamports: PAYMENT_CONFIG.amount * 1000000000, // Convert SOL to lamports
+					lamports: amount * 1000000000, // Convert SOL to lamports
 				})
 			);
 
@@ -81,7 +82,7 @@ export default function PayerConnect({ token }: Props) {
 			}
 
 			const response = await axios.post(
-				`${process.env.NEXT_PUBLIC_API}/v1/payer/task`,
+				`${process.env.NEXT_PUBLIC_API}/v2/wallet/payer/payment`,
 				{
 					signature,
 				},
@@ -120,7 +121,7 @@ export default function PayerConnect({ token }: Props) {
 					<DialogDescription>
 						{paymentStatus === "processing"
 							? "Please wait while we process your transaction..."
-							: `You're about to send ${PAYMENT_CONFIG.amount} SOL`}
+							: `You're about to send ${amount} SOL`}
 					</DialogDescription>
 				</DialogHeader>
 
@@ -134,7 +135,7 @@ export default function PayerConnect({ token }: Props) {
 								<div className="flex justify-between">
 									<span className="text-muted-foreground">Amount:</span>
 									<span className="font-medium">
-										{PAYMENT_CONFIG.amount} SOL
+										{amount} SOL
 									</span>
 								</div>
 								<div className="flex justify-between">
@@ -178,7 +179,7 @@ export default function PayerConnect({ token }: Props) {
 	);
 
 	return (
-		<div className="space-y-4 max-w-md mx-auto flex flex-col h-screen justify-center items-center">
+		<div className="space-y-4 max-w-md mx-auto flex flex-col  justify-center items-center">
 			<WalletConnect onConnect={handleConnect} token={token} />
 
 			{publicKey && (
@@ -191,7 +192,7 @@ export default function PayerConnect({ token }: Props) {
 					disabled={!publicKey}
 				>
 					<DollarSign className="w-5 h-5 mr-2" />
-					Pay {PAYMENT_CONFIG.amount} SOL
+					Pay {amount} SOL
 				</Button>
 			)}
 

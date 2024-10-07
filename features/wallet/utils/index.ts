@@ -6,7 +6,7 @@ const secret = new TextEncoder().encode(
 export async function verifyToken(token: string) {
     try {
         const { payload } = await jwtVerify(token, secret);
-        return payload as { payerId: string; taskId: string };
+        return payload as { payerId: string; taskId: string,amount:number };
     } catch (error) {
         console.error('Error verifying token:', error);
         return null;
