@@ -1,8 +1,10 @@
 "use client";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import type { ITelegramUser, IWebApp } from "@/features/telegram/types/telegram";
-import { ApiService } from "@/features/fetching/utils";
-
+import type {
+	ITelegramUser,
+	IWebApp,
+} from "@/features/telegram/types/telegram";
+import { ApiService } from "@/features/api/utils";
 
 export interface ITelegramContext {
 	webApp?: IWebApp;
@@ -25,7 +27,6 @@ export const TelegramProvider = ({
 
 			setWebApp(app);
 			ApiService.setAuthToken(app.initData);
-			console.log(app);
 		}
 	}, []);
 

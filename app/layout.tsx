@@ -4,7 +4,7 @@ import { geistMono, geistSans } from "./fonts/font";
 import "@/styles/globals.css";
 import Script from "next/script";
 import { TelegramProvider } from "@/features/telegram/provider/telegram-provider";
-import QueryClientWrapper from "@/features/fetching/provider/query-provider";
+import QueryClientWrapper from "@/features/api/provider/query-provider";
 import { Providers } from "@/features/theme/provider/next-theme-provider";
 
 export const metadata: Metadata = {
@@ -19,14 +19,14 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-		 <head>
-				 <Script
+			<head>
+				<Script
 					src="https://telegram.org/js/telegram-web-app.js"
 					strategy="beforeInteractive"
 				></Script>
-			</head> 
+			</head>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+				className={`${geistSans.className} ${geistMono.variable} antialiased`}
 			>
 				<TelegramProvider>
 					<QueryClientWrapper>
