@@ -68,7 +68,7 @@ const RewardDisplay: React.FC<RewardDisplayProps> = ({ tier, reward }) => (
 	>
 		<div className="flex items-center">
 			<Trophy className={`mr-2 h-5 w-5 ${getTierColor(tier)}`} />
-			<span className="font-semibold text-gray-700">
+			<span className="font-semibold text-foreground/20">
 				{tier.charAt(0).toUpperCase() + tier.slice(1)}
 			</span>
 		</div>
@@ -96,11 +96,11 @@ export default function DungeonCard({
 
 	return (
 		<Card className="overflow-hidden transition-all hover:shadow-lg border-2">
-			<CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50">
+			<CardHeader className="bg-gradient-to-r from-purple-50/50 to-blue-50/50">
 				<div className="space-y-4">
 					<div className="flex justify-between items-center">
 						<h3 className="text-xl font-bold text-gray-800">{dungeon.name}</h3>
-						<div className="flex items-center bg-white px-2 py-1 rounded-full border">
+						<div className="flex items-center  px-2 py-1 rounded-full border">
 							<Sparkles className="h-4 w-4 text-purple-500 mr-1" />
 							<span className="text-sm font-medium">
 								Level {dungeon.minimumLevel}+
@@ -114,13 +114,13 @@ export default function DungeonCard({
 
 			<CardContent className="pt-4">
 				<div className="flex justify-between items-center mb-6">
-					<div className="flex items-center bg-blue-50 px-3 py-2 rounded-lg">
+					<div className="flex items-center bg-blue-50/50 px-3 py-2 rounded-lg">
 						<Timer className="mr-2 h-5 w-5 text-blue-500" />
 						<span className="font-medium">
 							{Math.floor(dungeon.timeToComplete / 60)} min
 						</span>
 					</div>
-					<div className="flex items-center bg-green-50 px-3 py-2 rounded-lg">
+					<div className="flex items-center bg-green-50/50 px-3 py-2 rounded-lg">
 						<Sword className="mr-2 h-5 w-5 text-green-500" />
 						<span className="font-medium">{dungeon.entryPoints} tokens</span>
 					</div>
@@ -161,7 +161,7 @@ export default function DungeonCard({
 					className={`w-full py-6 text-lg font-semibold transition-all ${
 						canEnter
 							? "bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 text-white"
-							: "bg-gray-100 text-gray-400"
+							: "bg-gray-100/50 text-gray-400"
 					}`}
 				>
 					{canEnter ? (

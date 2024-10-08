@@ -22,7 +22,7 @@ const WebLanding = () => {
 			</p>
 			<Button
 				className={cn(
-					"bg-blue-500 transition duration-150 font-medium tracking-widest rounded-full text-white"
+					"bg-blue-500 transition duration-150 font-medium tracking-widest rounded-full text-foreground"
 				)}
 			>
 				<Link target="_blank" href="https://t.me/social_hunt_bot/r3ward">

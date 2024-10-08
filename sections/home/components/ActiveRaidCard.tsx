@@ -71,12 +71,12 @@ const ActiveRaidCard: React.FC<{
 	};
 
 	return (
-		<Card className="w-full overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border-gray-700">
+		<Card className="w-full overflow-hidden bg-gradient-to-br from-gray-900/20 to-gray-800/20 border-gray-700/30">
 			<CardHeader className="pb-2">
 				<div className="flex justify-between items-center">
 					<div className="flex items-center space-x-2">
 						<Shield className="h-5 w-5 text-blue-400" />
-						<CardTitle className="text-lg font-bold text-gray-100">
+						<CardTitle className="text-lg font-bold text-gray-100/50">
 							{raid.dungeon.name}
 						</CardTitle>
 					</div>
@@ -85,7 +85,7 @@ const ActiveRaidCard: React.FC<{
 			</CardHeader>
 			<CardContent className="pb-2">
 				<div className="space-y-2">
-					<div className="flex justify-between items-center text-sm text-gray-400">
+					<div className="flex justify-between items-center text-sm text-gray-400/30">
 						<div className="flex items-center">
 							<Clock className="h-4 w-4 mr-1" />
 							{timeLeft > 0 ? (
@@ -99,7 +99,7 @@ const ActiveRaidCard: React.FC<{
 						</div>
 						<span>{Math.round(progress)}%</span>
 					</div>
-					<Progress value={progress} className="h-2 bg-gray-700" />
+					<Progress value={progress} className="h-2 bg-primary" />
 				</div>
 			</CardContent>
 			<CardFooter className="pt-2">

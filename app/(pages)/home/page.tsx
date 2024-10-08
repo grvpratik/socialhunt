@@ -65,7 +65,7 @@ const TelegramHome: React.FC = () => {
 		mutationFn: (raidId: string) =>
 			toast.promise(ApiService.claimDungeonRaid(raidId), {
 				loading: "Finding result might get lucky",
-				success: <b>success</b>,
+				success: <b>raild completed</b>,
 				error: <b>failed</b>,
 			}),
 		onSuccess: (data) => {
