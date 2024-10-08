@@ -180,7 +180,7 @@ export default function PayerConnect({ token,amount }: Props) {
 
 	return (
 		<div className="space-y-4 max-w-md mx-auto flex flex-col  justify-center items-center">
-			<WalletConnect onConnect={handleConnect} token={token} />
+			<WalletConnect onConnect={handleConnect} token={token} type={"user"} />
 
 			{publicKey && (
 				<Button
