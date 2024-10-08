@@ -1,23 +1,125 @@
-'use client'
-import { ApiService } from '@/features/api/utils';
-import { useQuery } from '@tanstack/react-query';
-import React from 'react'
+"use client";
 
-const TelegramHome = () => {
-	const { isLoading, error, data, isFetching } = useQuery({
-		queryKey: ["rewardPoints"],
-		queryFn: async () =>
-			await ApiService.getActiveRaids(),
-	});
-	console.log(data);
-	if (isLoading || isFetching) return <div>Loading reward points...</div>;
-	if (error) return <div>Error fetching reward points: {error.message}</div>;
-	// startDungeonRaid("0cf924d0-6f93-4dd0-8497-705b8e12b002")
-	return <div>TelegramHome</div>;
+import { ApiService } from "@/features/api/utils";
+import ActiveRaids from "@/sections/home/components/ActiveRaids";
+import DungeonList from "@/sections/home/components/DungeonList";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import React from "react";
+import { toast } from "react-hot-toast";
+
+interface User {
+	tokens: number;
+	// Add other user properties as needed
 }
 
-export default TelegramHome
+interface Dungeon {
+	id: string;
+	entryTokens: number;
+	// Add other dungeon properties as needed
+}
 
+const TelegramHome: React.FC = () => {
+	const queryClient = useQueryClient();
+
+	const { data: dungeons, isLoading: isDungeonsLoading } = useQuery({
+		queryKey: ["dungeonList"],
+		queryFn: () => ApiService.getDungeonsList(),
+	});
+
+	const { data: userData } = useQuery({
+		queryKey: ["useracc"],
+		queryFn: () => ApiService.getGameAccountInfo(),
+	});
+
+	const { data: activeRaids } = useQuery({
+		queryKey: ["activeRaids"],
+		queryFn: () => ApiService.getActiveRaids(),
+	});
+
+	const user = userData?.data;
+
+	const enterDungeonMutation = useMutation({
+		mutationFn: (dungeonId: string) => ApiService.startDungeonRaid(dungeonId),
+		onSuccess: (data) => {
+			if (data?.status === 201) {
+				toast.success("Dungeon raid started successfully");
+				// // Invalidate relevant queries
+				// queryClient.invalidateQueries({ queryKey: ["activeRaids"] });
+				// queryClient.invalidateQueries({ queryKey: ["useracc"] });
+			}
+		},
+		onError: (error) => {
+			toast.error(
+				`Failed to start dungeon raid: ${
+					error instanceof Error ? error.message : "Unknown error"
+				}`
+			);
+		},
+	});
+
+	const claimRewardMutation = useMutation({
+		mutationFn: (raidId: string) => ApiService.claimDungeonRaid(raidId),
+		onSuccess: (data) => {
+			if (data?.status === 201) {
+				toast.success("Reward claimed successfully");
+				// Invalidate relevant queries
+				queryClient.invalidateQueries({ queryKey: ["activeRaids"] });
+				queryClient.invalidateQueries({ queryKey: ["useracc"] });
+			}
+		},
+		onError: (error) => {
+			toast.error(
+				`Failed to claim reward: ${
+					error instanceof Error ? error.message : "Unknown error"
+				}`
+			);
+		},
+	});
+
+	const handleEnterDungeon = (dungeonId: string) => {
+		if (!user) {
+			toast.error("User data not available");
+			return;
+		}
+
+		const dungeon = dungeons?.data.find((d: Dungeon) => d.id === dungeonId);
+		if (!dungeon) {
+			toast.error("Dungeon not found");
+			return;
+		}
+
+		if (user.tokens < dungeon.entryTokens) {
+			toast("Insufficient tokens to enter this dungeon");
+			return;
+		}
+
+		enterDungeonMutation.mutate(dungeonId);
+	};
+
+	const handleClaimReward = (raidId: string) => {
+		claimRewardMutation.mutate(raidId);
+	};
+	console.log({ activeRaids })
+	console.log({ dungeons });
+	console.log({ user });
+	return (
+		<div className="container mx-auto px-4 py-8">
+			<ActiveRaids
+				raids={activeRaids?.data}
+				onClaim={handleClaimReward}
+				// isClaimingReward={claimRewardMutation.isPending}
+			/>
+			<DungeonList
+				loading={isDungeonsLoading}
+				dungeons={dungeons?.data}
+				onEnter={handleEnterDungeon}
+				// isEnteringDungeon={enterDungeonMutation.isPending}
+			/>
+		</div>
+	);
+};
+
+export default TelegramHome;
 
 // "use client";
 // import React from "react";

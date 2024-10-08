@@ -26,7 +26,7 @@ const TABS = [
 
 	{
 		label: "Store",
-		href: "/store",
+		href: "/shop",
 		icon: <Swords className="h-5 w-5" />,
 	},
 	{

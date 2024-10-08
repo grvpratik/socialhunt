@@ -6,6 +6,7 @@ import Script from "next/script";
 import { TelegramProvider } from "@/features/telegram/provider/telegram-provider";
 import QueryClientWrapper from "@/features/api/provider/query-provider";
 import { Providers } from "@/features/theme/provider/next-theme-provider";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
 	title: "Create Next App",
@@ -30,7 +31,7 @@ export default function RootLayout({
 			>
 				<TelegramProvider>
 					<QueryClientWrapper>
-						<Providers>{children}</Providers>
+						<Providers><Toaster/>{children}</Providers>
 					</QueryClientWrapper>
 				</TelegramProvider>
 			</body>

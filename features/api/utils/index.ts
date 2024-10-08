@@ -1,3 +1,4 @@
+import { getTokenMetadata } from '@/features/wallet/utils/getTokenInfo';
 import axios from 'axios';
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_URL}/v2`;
@@ -38,7 +39,7 @@ export const ApiService = {
     getGameAccountInfo: async () => {
         const response = await instance.post(`/game/me`,
         );
-        return response;
+        return response.data;
     },
     getDungeonsList: async () => {
         const response = await instance.post(`/game/dungeons`,
@@ -48,17 +49,22 @@ export const ApiService = {
     getActiveRaids: async () => {
         const response = await instance.post(`/game/raid/active`,
         );
-        return response;
+        return response.data;
     },
     startDungeonRaid: async (dungeonId: string) => {
         const response = await instance.post(`/game/${dungeonId}/start`,
         );
-        return response;
+        return response.data;
     },
     claimDungeonRaid: async (raidId: string) => {
         const response = await instance.post(`/game/${raidId}/claim`,
         );
-        return response;
+        return response.data;
+    },
+    getTokenMetadata: async (address:string) => {
+        const response = await instance.get(`/game/${address}/info`,
+        );
+        return response.data;
     },
     getPayouts: async () => {
         const response = await instance.get('/payouts');
