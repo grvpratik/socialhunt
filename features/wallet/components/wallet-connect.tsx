@@ -58,7 +58,7 @@ export default function WalletConnect({ onConnect, token ,type}: Props) {
 			}
 
 			const response = await axios.post(
-				`http://localhost:8080/v2/wallet/${type}/connect`,
+				`${process.env.NEXT_PUBLIC_URL}/v2/wallet/${type}/connect`,
 				{
 					signature,
 					publicKey: publicKey.toString(),

@@ -1,9 +1,9 @@
 import WalletConnect from "@/features/wallet/components/wallet-connect";
-import { storage } from "@/lib/utils";
+
 import React from "react";
 
 const UserWalletPage = ({
-	params,
+	
 	searchParams,
 }: {
 	params: { slug: string };

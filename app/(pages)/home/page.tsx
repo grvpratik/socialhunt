@@ -7,10 +7,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React from "react";
 import { toast } from "react-hot-toast";
 
-interface User {
-	tokens: number;
-	// Add other user properties as needed
-}
+// interface User {
+// 	tokens: number;
+// 	// Add other user properties as needed
+// }
 
 interface Dungeon {
 	id: string;
@@ -39,7 +39,11 @@ const TelegramHome: React.FC = () => {
 	const user = userData?.data;
 
 	const enterDungeonMutation = useMutation({
-		mutationFn: (dungeonId: string) => ApiService.startDungeonRaid(dungeonId),
+		mutationFn: (dungeonId: string) => toast.promise(ApiService.startDungeonRaid(dungeonId), {
+				loading: "Creating Raid..",
+				success: <b>success</b>,
+				error: <b>failed</b>,
+			}),
 		onSuccess: (data) => {
 			if (data?.status === 201) {
 				toast.success("Dungeon raid started successfully");
@@ -58,7 +62,12 @@ const TelegramHome: React.FC = () => {
 	});
 
 	const claimRewardMutation = useMutation({
-		mutationFn: (raidId: string) => ApiService.claimDungeonRaid(raidId),
+		mutationFn: (raidId: string) =>
+			toast.promise(ApiService.claimDungeonRaid(raidId), {
+				loading: "Finding result might get lucky",
+				success: <b>success</b>,
+				error: <b>failed</b>,
+			}),
 		onSuccess: (data) => {
 			if (data?.status === 201) {
 				toast.success("Reward claimed successfully");
@@ -92,14 +101,14 @@ const TelegramHome: React.FC = () => {
 			toast("Insufficient tokens to enter this dungeon");
 			return;
 		}
-
+		
 		enterDungeonMutation.mutate(dungeonId);
 	};
 
 	const handleClaimReward = (raidId: string) => {
 		claimRewardMutation.mutate(raidId);
 	};
-	console.log({ activeRaids })
+	console.log({ activeRaids });
 	console.log({ dungeons });
 	console.log({ user });
 	return (

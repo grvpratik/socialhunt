@@ -58,7 +58,7 @@ function PayerContent({ token,amount }: { token: string,amount:number }) {
 }
 
 export default async function PayerPage({
-	params,
+	
 	searchParams,
 }: {
 	params: { slug: string };

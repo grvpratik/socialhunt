@@ -1,10 +1,10 @@
-import { getTokenMetadata } from '@/features/wallet/utils/getTokenInfo';
+
 import axios from 'axios';
 
 const BASE_URL = `${process.env.NEXT_PUBLIC_URL}/v2`;
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8080/v2',
+    baseURL: BASE_URL,
 });
 
 export const ApiService = {

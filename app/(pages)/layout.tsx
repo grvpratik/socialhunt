@@ -1,17 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import { useTelegram } from "@/features/telegram/provider/telegram-provider";
+import React from "react";
+import { usePathname } from "next/navigation";
+
 import AnimatedBackground from "@/components/framer/AnimatedBackground";
 import {
-	Banknote,
-	Coins,
-	Component,
-	Diamond,
+	
 	Home,
-	Settings,
-	Sword,
+	
 	Swords,
 	Trophy,
 	User,

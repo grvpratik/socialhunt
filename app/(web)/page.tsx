@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 import { cn, storage } from "@/lib/utils";
-import { Inter } from "next/font/google";
+
 import { useRouter } from "next/navigation";
 import { useTelegramTheme } from "@/features/telegram/hooks/useTelegamTheme";
 import { Button } from "@/components/ui/button";
@@ -30,12 +30,6 @@ interface AuthState {
 	error: string | null;
 }
 
-const inter = Inter({ subsets: ["latin"] });
-
-// Constants
-const LOCAL_STORAGE_KEYS = {
-	TOKEN: "app_token",
-} as const;
 
 
 
