@@ -1,3 +1,4 @@
+'use client'
 import React from "react";
 import { Shield, Sword, Wand } from "lucide-react";
 import { Card } from "@/components/ui/card";
@@ -19,10 +20,10 @@ const characterIcons = {
 	beast: Shield,
 };
 
-const characterColors = {
-	knight: "text-red-500",
-	mage: "text-blue-500",
-	beast: "text-green-500",
+const characterGradients = {
+	knight: "bg-gradient-to-r from-red-500 to-pink-500",
+	mage: "bg-gradient-to-r from-blue-500 to-indigo-500",
+	beast: "bg-gradient-to-r from-green-500 to-teal-500",
 };
 
 const ExpBar: React.FC<{ current: number; max: number }> = ({
@@ -32,13 +33,10 @@ const ExpBar: React.FC<{ current: number; max: number }> = ({
 	const percentage = Math.min((current / max) * 100, 100);
 
 	return (
-		<div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+		<div className="w-full h-2 bg-gray-200 rounded-full mt-2">
 			<div
-				className="h-2.5 rounded-full transition-all duration-500"
-				style={{
-					width: `${percentage}%`,
-					backgroundColor: "currentColor",
-				}}
+				className="h-full bg-yellow-400 rounded-full"
+				style={{ width: `${percentage}%` }}
 			/>
 		</div>
 	);
@@ -52,47 +50,30 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({
 }) => {
 	const queryClient = useQueryClient();
 	const Icon = characterIcons[type];
-	const colorClass = characterColors[type];
+	const gradientClass = characterGradients[type];
 	const expForNextLevel = calculateExpToNextLevel(level);
 
-	// const { mutate: gainExp, isLoading } = useMutation({
-	// 	mutationFn: () =>
-	// 		updateCharacterExp(type, Math.floor(Math.random() * 100) + 50),
-	// 	onSuccess: (newAccount: GameAccount) => {
-	// 		queryClient.setQueryData(["gameAccount"], newAccount);
-	// 	},
-	// });
-
 	return (
-		<Card className={`p-6 ${colorClass}`}>
-			<div className="flex items-center gap-4">
-				<div className="flex-shrink-0">
-					<Icon className="w-12 h-12" />
-				</div>
-
-				<div className="flex-grow">
-					<div className="flex justify-between items-center mb-2">
-						<h2 className="text-xl font-bold">{name}</h2>
-						<span className="text-lg font-semibold">Lvl {level}</span>
-					</div>
-
-					<div className="space-y-2">
-						<ExpBar current={exp} max={expForNextLevel} />
-						<div className="flex justify-between text-sm opacity-75">
-							<span>{exp} EXP</span>
-							<span>{expForNextLevel} EXP</span>
-						</div>
+		<Card className={`p-4 rounded-lg shadow-lg ${gradientClass} text-white`}>
+			<div className="flex items-center justify-between mb-4">
+				<div className="flex items-center space-x-3">
+					<Icon className="w-8 h-8" />
+					<div>
+						<h2 className="text-xl font-semibold">{name}</h2>
+						<p className="text-sm">Lvl {level}</p>
 					</div>
 				</div>
+				<p className="text-lg font-semibold">
+					EXP: {exp} / {expForNextLevel}
+				</p>
 			</div>
 
-			<button
-				// onClick={() => gainExp()}
-				// disabled={isLoading}
-				className="mt-4 w-full bg-current text-white py-2 rounded hover:opacity-90 transition-opacity disabled:opacity-50"
-			>
-				{/* {isLoading ? "Training..." : "Train"} */}Soon..
-			</button>
+			<ExpBar current={exp} max={expForNextLevel} />
+
+			<div className="text-sm mt-4 text-gray-100">
+				<p>Level Progress</p>
+				<p>Soon...</p>
+			</div>
 		</Card>
 	);
 };
