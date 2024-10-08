@@ -9,7 +9,7 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { CopyIcon, ExternalLink } from "lucide-react";
-import { getTokenMetadata } from "@/features/wallet/utils/getTokenInfo";
+
 import { ApiService } from "@/features/api/utils";
 
 interface TokenInfoProps {
