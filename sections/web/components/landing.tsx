@@ -25,7 +25,7 @@ const WebLanding = () => {
 					"bg-blue-500 transition duration-150 font-medium tracking-widest rounded-full text-foreground"
 				)}
 			>
-				<Link target="_blank" href="https://t.me/social_hunt_bot/r3ward">
+				<Link target="_blank" href="https://t.me/social_hunt_bot">
 					Open in Telegram
 				</Link>
 			</Button>
